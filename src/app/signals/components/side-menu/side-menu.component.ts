@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { SideMenu } from '../../interfaces/sideMenu.interface';
 
 @Component({
@@ -8,10 +8,18 @@ import { SideMenu } from '../../interfaces/sideMenu.interface';
 })
 export class SideMenuComponent {
 
-  public menuItems: SideMenu[] = [
+  // * My first Signal
+  public menuItems = signal<SideMenu[]>([
     { title: 'Contador', route: 'counter' },
     { title: 'Usuario', route: 'user-info' },
     { title: 'Mutaciones', route: 'properties' }
-  ]
+  ]);
+
+  // * No signal
+  // public menuItems: SideMenu[] = [
+  //   { title: 'Contador', route: 'counter' },
+  //   { title: 'Usuario', route: 'user-info' },
+  //   { title: 'Mutaciones', route: 'properties' }
+  // ]
 
 }
