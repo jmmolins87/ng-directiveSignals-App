@@ -1,6 +1,7 @@
 import { 
   Component, 
   OnInit, 
+  computed, 
   inject, 
   signal 
 } from '@angular/core';
@@ -16,6 +17,10 @@ export class UserInfoPageComponent implements OnInit {
   public userId = signal(1);
   public currentUser = signal<User | undefined>( undefined );
   public userWasFound = signal<boolean>( true );
+  public fullName = computed<string>(() => {
+    if( !this.currentUser() ) return 'Usuario no encontrado';
+    return `${ this.currentUser()?.first_name } ${ this.currentUser()?.last_name }`
+  });
 
   private _usersService = inject(UsersService);
 
@@ -32,9 +37,15 @@ export class UserInfoPageComponent implements OnInit {
     this.currentUser.set( undefined );
 
     this._usersService.getUserById( id )
-      .subscribe( user => {
-        this.currentUser.set( user );
-        this.userWasFound.set( true );
+      .subscribe({
+        next: ( user ) => {
+          this.currentUser.set( user );
+          this.userWasFound.set( true );
+        },
+        error: () => {
+          this.userWasFound.set( false );
+          this.currentUser.set( undefined );
+        }
       });
 
   }
