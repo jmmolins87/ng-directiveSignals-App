@@ -1,0 +1,12 @@
+
+
+.wrap-buttons {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 200px;
+}
+.wrap-buttons button {
+    flex: 0 0 20%;
+}
